@@ -1,8 +1,0 @@
----
-rules:
-  exclude_filter:
-    - LINT0009
-    - ANSIBLE0012
-    - ANSIBLE0017
-    - ANSIBLE0018
-    - ANSIBLE0022
