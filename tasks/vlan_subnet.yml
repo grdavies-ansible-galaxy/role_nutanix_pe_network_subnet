@@ -20,17 +20,17 @@
     - outer_item.state == "present"
 
 - name: Reset fact current_network_uuid
-  set_fact:
+  ansible.builtin.set_fact:
     nutanix_current_network_uuid: "None"
 
 - name: search current external subnets for "{{ outer_item.name }}"
-  set_fact:
+  ansible.builtin.set_fact:
     nutanix_current_network_uuid: "{{ item.metadata.uuid }}"
   when: item.status.name == outer_item.name
   with_items: "{{ nutanix_current_subnets.response.entities }}"
 
 - name: Create external subnet without AHV IPAM "{{ outer_item.name }}"
-  nutanix.ncp.ntnx_subnets:
+  ncp.ntnx_subnets:
     nutanix_host: "{{ nutanix_host }}"
     nutanix_username: "{{ nutanix_username }}"
     nutanix_password: "{{ nutanix_password }}"
@@ -52,7 +52,7 @@
     - not outer_item.gateway | default('') | ansible.utils.ipaddr
 
 - name: Create external subnet with AHV IPAM "{{ outer_item.name }}"
-  nutanix.ncp.ntnx_subnets:
+  ncp.ntnx_subnets:
     nutanix_host: "{{ nutanix_host }}"
     nutanix_username: "{{ nutanix_username }}"
     nutanix_password: "{{ nutanix_password }}"
@@ -82,7 +82,8 @@
     - outer_item.net_address | default('') | ansible.utils.ipaddr
     - outer_item.gateway | default('') | ansible.utils.ipaddr
 
-- debug:
+- name: Debug nutanix_subnet_create
+  ansible.builtin.debug:
     var: nutanix_subnet_create
   when: nutanix_debug
 
@@ -142,7 +143,7 @@
 #     - outer_item.gateway | ansible.utils.ipaddr
 
 - name: Delete external subnet "{{ outer_item.name }}"
-  ntnx_subnets:
+  ncp.ntnx_subnets:
     nutanix_host: "{{ nutanix_host }}"
     nutanix_username: "{{ nutanix_username }}"
     nutanix_password: "{{ nutanix_password }}"
@@ -156,6 +157,7 @@
     - nutanix_current_network_uuid != "None"
     - outer_item.state == "absent"
 
-- debug:
+- name: Debug nutanix_subnet_delete
+  ansible.builtin.debug:
     var: nutanix_subnet_delete
   when: nutanix_debug
