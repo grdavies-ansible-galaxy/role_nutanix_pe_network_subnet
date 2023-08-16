@@ -6,7 +6,8 @@
 #   loop_control:
 #     loop_var: outer_item
 
-- include_tasks: setup_api.yml
+- name: Setup connection to Nutanix API
+  ansible.builtin.include_tasks: setup_api.yml
 
 - name: Get PE cluster name
   ansible.builtin.include_tasks: get_cluster_name.yml

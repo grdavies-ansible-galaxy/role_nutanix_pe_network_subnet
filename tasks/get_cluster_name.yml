@@ -7,7 +7,7 @@
     body_format: json
     headers:
       Authorization: "{{ nutanix_api_auth }}"
-    return_content: yes
+    return_content: true
   register: nutanix_prism_cluster_current_config
 
 - name: Set nutanix_current_cluster_name
