@@ -11,6 +11,7 @@ profile: shared # min, basic, moderate, safety, shared, production
 # option are parsed relative to the CWD of execution.
 exclude_paths:
   - .cache/ # implicit unless exclude_paths is defined in config
+  - .github/
   - tests/
   - test/fixtures/formatting-before/
   - test/fixtures/formatting-prettier/
@@ -77,15 +78,15 @@ warn_list:
 #   - all
 
 # Offline mode disables installation of requirements.yml and schema refreshing
-offline: true
+offline: false
 
 # Define required Ansible's variables to satisfy syntax check
-extra_vars:
-  foo: bar
-  multiline_string_variable: |
-    line1
-    line2
-  complex_variable: ":{;\t$()"
+# extra_vars:
+#   foo: bar
+#   multiline_string_variable: |
+#     line1
+#     line2
+#   complex_variable: ":{;\t$()"
 
 # Uncomment to enforce action validation with tasks, usually is not
 # needed as Ansible syntax check also covers it.
