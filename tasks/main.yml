@@ -14,7 +14,7 @@
     - nutanix_endpoint_prism_type == 'pe'
 
 - name: Gather cluster subnets
-  ntnx_subnets_info:
+  nutanix.ncp.ntnx_subnets_info:
     nutanix_host: "{{ nutanix_host }}"
     nutanix_username: "{{ nutanix_username }}"
     nutanix_password: "{{ nutanix_password }}"
