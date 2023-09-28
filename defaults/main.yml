@@ -8,4 +8,3 @@ role_nutanix_pe_network_subnet_validate_certs: false
 role_nutanix_pe_network_subnet_debug: false
 role_nutanix_pe_network_subnet_default_virtual_switch: vs0
 empty_list: []
-role_nutanix_pe_network_subnet_debug: false
