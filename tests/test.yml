@@ -5,27 +5,23 @@
   roles:
     - role: ../..
   vars:
-    nutanix_host: 10.38.186.37
-    nutanix_username: admin
-    nutanix_password: nx2Tech106!
-    nutanix_subnets:
-      # - name: Primary
-      #   state: absent
-      # - name: Secondary
-      #   state: absent
+    role_nutanix_pe_network_subnet_host: 10.38.67.37
+    role_nutanix_pe_network_subnet_username: admin
+    role_nutanix_pe_network_subnet_password: nx2Tech454!
+    role_nutanix_pe_network_subnet_list:
       - name: Primary
         state: present
         virtual_switch: vs0
         vlan_id: 0
-        net_address: 10.38.186.0/25
-        gateway: 10.38.186.1
+        net_address: 10.42.18.0/25
+        gateway: 10.42.18.1
         dns_server_list:
           - 10.42.194.10
-        domain_name: ntnxlab.local
-        domain_search: ntnxlab.local
+        domain_name:
+          - ntnxlab.local
+        domain_search:
+          - ntnxlab.local
         ipam:
-          - start_ip: 10.38.185.50
-            end_ip: 10.38.185.126
-      # - name: Secondary
-      #   state: present
-      #   vlan_id: 1853
+          - start_ip: 10.42.18.50
+            end_ip: 10.42.18.126
+    # nutanix_debug: true

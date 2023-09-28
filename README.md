@@ -5,17 +5,17 @@ This Ansible role will create or delete a defined subnet on a Nutanix cluster ru
 
 ## Role Variables
 
-| Variable                       | Required | Default  | Choices                                                                         | Comments                                                                                                                                                                                                                          |
-|--------------------------------|----------|----------|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| nutanix_host                   | yes      |          |                                                                                 | The IP address or FQDN for the Prism (Element or Central) to which you want to connect.                                                                                                                                           |
-| nutanix_username               | yes      |          |                                                                                 | A valid username with appropriate rights to access the Nutanix API.                                                                                                                                                               |
-| nutanix_password               | yes      |          |                                                                                 | A valid password for the supplied username.                                                                                                                                                                                       |
-| nutanix_port                   | no       | 9440     |                                                                                 | The Prism TCP port.                                                                                                                                                                                                               |
-| validate_certs                 | no       | false    | true / false                                                                    | Whether to check if Prism UI certificates are valid.                                                                                                                                                                              |
-| nutanix_subnets                | no       | []       |                                                                                 |                                                                                                                                                                                                                                   |
+| Variable                                      | Required | Default  | Choices                                                                         | Comments                                                                                                                                                                                                                          |
+|-----------------------------------------------|----------|----------|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| role_nutanix_pe_network_subnet_host           | yes      |          |                                                                                 | The IP address or FQDN for the Prism (Element or Central) to which you want to connect.                                                                                                                                           |
+| role_nutanix_pe_network_subnet_username       | yes      |          |                                                                                 | A valid username with appropriate rights to access the Nutanix API.                                                                                                                                                               |
+| role_nutanix_pe_network_subnet_password       | yes      |          |                                                                                 | A valid password for the supplied username.                                                                                                                                                                                       |
+| role_nutanix_pe_network_subnet_port           | no       | 9440     |                                                                                 | The Prism TCP port.                                                                                                                                                                                                               |
+| role_nutanix_pe_network_subnet_validate_certs | no       | false    | true / false                                                                    | Whether to check if Prism UI certificates are valid.                                                                                                                                                                              |
+| role_nutanix_pe_network_subnet_list           | no       | []       |                                                                                 |                                                                                                                                                                                                                                   |
 
 
-### nutanix_subnets dict format
+### role_nutanix_pe_network_subnet_list dict format
 
 | Variable                       | Required | Default  | Choices                                                                         | Comments                                                                                                                                                                                                                          |
 |--------------------------------|----------|----------|---------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -44,12 +44,12 @@ This playbook will create a subnet called Primary on the default VLAN.
 - hosts: localhost
   gather_facts: false
   roles:
-    - role: grdavies.role_nutanix_pe_network_subnet
+    - role: grdavies.role_nutanix_pe_network_subnet_host
   vars:
-    nutanix_host: 10.38.185.37
-    nutanix_username: admin
-    nutanix_password: nx2Tech165!
-    nutanix_subnets:
+    role_nutanix_pe_network_subnet_host: 10.38.185.37
+    role_nutanix_pe_network_subnet_username: admin
+    role_nutanix_pe_network_subnet_password: nx2Tech165!
+    role_nutanix_pe_network_subnet_list:
       - name: Primary
         state: present
         virtual_switch: vs0
@@ -61,12 +61,12 @@ This playbook will remove a subnet called Primary.
 - hosts: localhost
   gather_facts: false
   roles:
-    - role: grdavies.role_nutanix_pe_network_subnet
+    - role: grdavies.role_nutanix_pe_network_subnet_host
   vars:
-    nutanix_host: 10.38.185.37
-    nutanix_username: admin
-    nutanix_password: nx2Tech165!
-    nutanix_subnets:
+    role_nutanix_pe_network_subnet_host: 10.38.185.37
+    role_nutanix_pe_network_subnet_username: admin
+    role_nutanix_pe_network_subnet_password: nx2Tech165!
+    role_nutanix_pe_network_subnet_list:
       - name: Primary
         state: absent
 ```
@@ -76,12 +76,12 @@ This playbook will create a subnet called Primary configured with AHV IPAM.
 - hosts: localhost
   gather_facts: false
   roles:
-    - role: grdavies.role_nutanix_pe_network_subnet
+    - role: grdavies.role_nutanix_pe_network_subnet_host
   vars:
-    nutanix_host: 10.38.185.37
-    nutanix_username: admin
-    nutanix_password: nx2Tech165!
-    nutanix_subnets:
+    role_nutanix_pe_network_subnet_host: 10.38.185.37
+    role_nutanix_pe_network_subnet_username: admin
+    role_nutanix_pe_network_subnet_password: nx2Tech165!
+    role_nutanix_pe_network_subnet_list:
       - name: Primary
         state: present
         virtual_switch: vs0

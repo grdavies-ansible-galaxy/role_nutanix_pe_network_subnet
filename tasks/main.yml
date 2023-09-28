@@ -1,29 +1,30 @@
 ---
-# tasks file for nutanix_role_prism_network_subnet
-# - name: Check variables
-#   include_tasks: check_variables.yml
-#   loop: "{{ nutanix_subnets }}"
-#   loop_control:
-#     loop_var: outer_item
-
 - name: Setup connection to Nutanix API
-  ansible.builtin.include_tasks: setup_api.yml
+  ansible.builtin.include_role:
+    name: grdavies.role_nutanix_prism_api
+  vars:
+    role_nutanix_prism_api_host: "{{ role_nutanix_pe_network_subnet_host }}"
+    role_nutanix_prism_api_username: "{{ role_nutanix_pe_network_subnet_username }}"
+    role_nutanix_prism_api_password: "{{ role_nutanix_pe_network_subnet_password }}"
+    role_nutanix_prism_api_port: "{{ role_nutanix_pe_network_subnet_port | default(omit) }}"
+    role_nutanix_prism_api_validate_certs: "{{ role_nutanix_pe_network_subnet_validate_certs | default(omit) }}"
+    role_nutanix_prism_api_debug: "{{ role_nutanix_pe_network_subnet_debug | default(omit) }}"
 
 - name: Get PE cluster name
   ansible.builtin.include_tasks: get_cluster_name.yml
   when:
-    - nutanix_endpoint_prism_type == 'pe'
+    - role_nutanix_prism_api_endpoint_type == 'pe'
 
 - name: Gather cluster subnets
   nutanix.ncp.ntnx_subnets_info:
-    nutanix_host: "{{ nutanix_host }}"
-    nutanix_username: "{{ nutanix_username }}"
-    nutanix_password: "{{ nutanix_password }}"
-    validate_certs: "{{ validate_certs }}"
-  register: nutanix_current_subnets
+    nutanix_host: "{{ role_nutanix_pe_network_subnet_host }}"
+    nutanix_username: "{{ role_nutanix_pe_network_subnet_username }}"
+    nutanix_password: "{{ role_nutanix_pe_network_subnet_password }}"
+    validate_certs: "{{ role_nutanix_pe_network_subnet_validate_certs }}"
+  register: role_nutanix_pe_network_subnet_list_current
 
 - name: Inputs for external subnets task
   ansible.builtin.include_tasks: vlan_subnet.yml
-  loop: "{{ nutanix_subnets }}"
+  loop: "{{ role_nutanix_pe_network_subnet_list }}"
   loop_control:
-    loop_var: outer_item
+    loop_var: role_nutanix_pe_network_subnet_list_outer_item

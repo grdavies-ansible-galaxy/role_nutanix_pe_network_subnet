@@ -3,161 +3,161 @@
   ansible.builtin.fail:
     msg: "the name variable has to be defined."
   when:
-    - outer_item.name | default("") == ""
+    - role_nutanix_pe_network_subnet_list_outer_item.name | default("") == ""
 
-- name: "State check for '{{ outer_item.name }}'"
+- name: "State check for '{{ role_nutanix_pe_network_subnet_list_outer_item.name }}'"
   ansible.builtin.fail:
-    msg: "Either state is not defined or is not an allowed value ['present', 'absent'] for subnet '{{ outer_item.name }}'"
+    msg: "Either state is not defined or is not an allowed value ['present', 'absent'] for subnet '{{ role_nutanix_pe_network_subnet_list_outer_item.name }}'"
   when:
-    - outer_item.state is not defined
-    - outer_item.state not in ['present', 'absent']
+    - role_nutanix_pe_network_subnet_list_outer_item.state is not defined
+    - role_nutanix_pe_network_subnet_list_outer_item.state not in ['present', 'absent']
 
-- name: "Vlan_id check for '{{ outer_item.name }}'"
+- name: "Vlan_id check for '{{ role_nutanix_pe_network_subnet_list_outer_item.name }}'"
   ansible.builtin.fail:
-    msg: "vlan_id has to be defined for subnet '{{ outer_item.name }}'"
+    msg: "vlan_id has to be defined for subnet '{{ role_nutanix_pe_network_subnet_list_outer_item.name }}'"
   when:
-    - outer_item.vlan_id | default("") == ""
-    - outer_item.state == "present"
+    - role_nutanix_pe_network_subnet_list_outer_item.vlan_id | default("") == ""
+    - role_nutanix_pe_network_subnet_list_outer_item.state == "present"
 
 - name: Reset fact current_network_uuid
   ansible.builtin.set_fact:
-    nutanix_current_network_uuid: "None"
+    role_nutanix_pe_network_subnet_list_item_network_uuid: "None"
 
-- name: Search current external subnets for "{{ outer_item.name }}"
+- name: Search current external subnets for "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
   ansible.builtin.set_fact:
-    nutanix_current_network_uuid: "{{ item.metadata.uuid }}"
-  when: item.status.name == outer_item.name
-  with_items: "{{ nutanix_current_subnets.response.entities }}"
+    role_nutanix_pe_network_subnet_list_item_network_uuid: "{{ item.metadata.uuid }}"
+  when: item.status.name == role_nutanix_pe_network_subnet_list_outer_item.name
+  with_items: "{{ role_nutanix_pe_network_subnet_list_current.response.entities }}"
 
-- name: Create external subnet without AHV IPAM "{{ outer_item.name }}"
+- name: Create external subnet without AHV IPAM "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
   nutanix.ncp.ntnx_subnets:
-    nutanix_host: "{{ nutanix_host }}"
-    nutanix_username: "{{ nutanix_username }}"
-    nutanix_password: "{{ nutanix_password }}"
-    validate_certs: "{{ validate_certs }}"
+    nutanix_host: "{{ role_nutanix_pe_network_subnet_host }}"
+    nutanix_username: "{{ role_nutanix_pe_network_subnet_username }}"
+    nutanix_password: "{{ role_nutanix_pe_network_subnet_password }}"
+    validate_certs: "{{ role_nutanix_pe_network_subnet_validate_certs }}"
     state: present
     wait: true
-    name: "{{ outer_item.name }}"
+    name: "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
     vlan_subnet:
       virtual_switch:
-        name: "{{ outer_item.virtual_switch | default(nutanix_default_virtual_switch) }}"
-      vlan_id: "{{ outer_item.vlan_id }}"
+        name: "{{ role_nutanix_pe_network_subnet_list_outer_item.virtual_switch | default(role_nutanix_pe_network_subnet_default_virtual_switch) }}"
+      vlan_id: "{{ role_nutanix_pe_network_subnet_list_outer_item.vlan_id }}"
       cluster:
-        name: "{{ cluster.name | default(nutanix_current_cluster_name) }}"
-  register: nutanix_subnet_create
+        name: "{{ cluster.name | default(role_nutanix_pe_network_subnet_cluster_name) }}"
+  register: role_nutanix_pe_network_subnet_create_task
   when:
-    - nutanix_current_network_uuid == "None"
-    - outer_item.state == "present"
-    - not outer_item.net_address | default('') | ansible.utils.ipaddr
-    - not outer_item.gateway | default('') | ansible.utils.ipaddr
+    - role_nutanix_pe_network_subnet_list_item_network_uuid == "None"
+    - role_nutanix_pe_network_subnet_list_outer_item.state == "present"
+    - not role_nutanix_pe_network_subnet_list_outer_item.net_address | default('') | ansible.utils.ipaddr
+    - not role_nutanix_pe_network_subnet_list_outer_item.gateway | default('') | ansible.utils.ipaddr
 
-- name: Create external subnet with AHV IPAM "{{ outer_item.name }}"
+- name: Create external subnet with AHV IPAM "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
   nutanix.ncp.ntnx_subnets:
-    nutanix_host: "{{ nutanix_host }}"
-    nutanix_username: "{{ nutanix_username }}"
-    nutanix_password: "{{ nutanix_password }}"
-    validate_certs: "{{ validate_certs }}"
+    nutanix_host: "{{ role_nutanix_pe_network_subnet_host }}"
+    nutanix_username: "{{ role_nutanix_pe_network_subnet_username }}"
+    nutanix_password: "{{ role_nutanix_pe_network_subnet_password }}"
+    validate_certs: "{{ role_nutanix_pe_network_subnet_validate_certs }}"
     state: present
     wait: true
-    name: "{{ outer_item.name }}"
+    name: "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
     vlan_subnet: # {{ lookup('template','vlan_subnet.j2') | from_yaml | to_yaml }}
-      virtual_switch:
-        name: "{{ outer_item.virtual_switch | default(nutanix_default_virtual_switch) }}"
-      vlan_id: "{{ outer_item.vlan_id }}"
+      vlan_id: "{{ role_nutanix_pe_network_subnet_list_outer_item.vlan_id }}"
       cluster:
-        name: "{{ cluster.name | default(nutanix_current_cluster_name) }}"
+        name: "{{ cluster.name | default(role_nutanix_pe_network_subnet_cluster_name) }}"
+      virtual_switch:
+        name: "{{ role_nutanix_pe_network_subnet_list_outer_item.virtual_switch | default(role_nutanix_pe_network_subnet_default_virtual_switch) }}"
       ipam:
-        network_ip: "{{ outer_item.net_address | ansible.utils.ipaddr('network') }}"
-        network_prefix: "{{ outer_item.net_address | ansible.utils.ipaddr('prefix') }}"
-        gateway_ip: "{{ outer_item.gateway }}"
-        ip_pools: "{{ outer_item.pools | default([]) }}"
+        network_ip: "{{ role_nutanix_pe_network_subnet_list_outer_item.net_address | ansible.utils.ipaddr('network') }}"
+        network_prefix: "{{ role_nutanix_pe_network_subnet_list_outer_item.net_address | ansible.utils.ipaddr('prefix') }}"
+        gateway_ip: "{{ role_nutanix_pe_network_subnet_list_outer_item.gateway }}"
+        ip_pools: "{{ role_nutanix_pe_network_subnet_list_outer_item.pools | default([]) }}"
         dhcp:
-          dns_servers: "{{ outer_item.dns | default([]) }}"
-          domain_name: "{{ outer_item.domain | default('') }}"
-          domain_search: "{{ outer_item.domain_search | default('') }}"
-  register: nutanix_subnet_create
+          dns_servers: "{{ role_nutanix_pe_network_subnet_list_outer_item.dns_server_list | default([]) }}"
+          domain_name: "{{ role_nutanix_pe_network_subnet_list_outer_item.domain_name | default([]) }}"
+          domain_search: "{{ role_nutanix_pe_network_subnet_list_outer_item.domain_search | default([]) }}"
+  register: role_nutanix_pe_network_subnet_create_task
   when:
-    - nutanix_current_network_uuid == "None"
-    - outer_item.state == "present"
-    - outer_item.net_address | default('') | ansible.utils.ipaddr
-    - outer_item.gateway | default('') | ansible.utils.ipaddr
+    - role_nutanix_pe_network_subnet_list_item_network_uuid == "None"
+    - role_nutanix_pe_network_subnet_list_outer_item.state == "present"
+    - role_nutanix_pe_network_subnet_list_outer_item.net_address | default('') | ansible.utils.ipaddr
+    - role_nutanix_pe_network_subnet_list_outer_item.gateway | default('') | ansible.utils.ipaddr
 
-- name: Debug nutanix_subnet_create
+- name: Debug role_nutanix_pe_network_subnet_create_task
   ansible.builtin.debug:
-    var: nutanix_subnet_create
-  when: nutanix_debug
+    var: role_nutanix_pe_network_subnet_create_task
+  when: role_nutanix_pe_network_subnet_debug
 
-# - name: Update external subnet without AHV IPAM "{{ outer_item.name }}"
+# - name: Update external subnet without AHV IPAM "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
 #   ntnx_subnets:
-#     nutanix_host: "{{ nutanix_host }}"
-#     nutanix_username: "{{ nutanix_username }}"
-#     nutanix_password: "{{ nutanix_password }}"
-#     validate_certs: "{{ validate_certs }}"
+#     nutanix_host: "{{ role_nutanix_pe_network_subnet_host }}"
+#     nutanix_username: "{{ role_nutanix_pe_network_subnet_username }}"
+#     nutanix_password: "{{ role_nutanix_pe_network_subnet_password }}"
+#     validate_certs: "{{ role_nutanix_pe_network_subnet_validate_certs }}"
 #     state: present
 #     wait: True
-#     name: "{{ outer_item.name }}"
-#     subnet_uuid: "{{ nutanix_current_network_uuid }}"
+#     name: "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
+#     subnet_uuid: "{{ role_nutanix_pe_network_subnet_list_item_network_uuid }}"
 #     vlan_subnet: # "{{lookup('template','vlan_subnet.j2') | from_yaml | to_yaml}}"
 #       virtual_switch:
-#         name: "{{ outer_item.virtual_switch | default(nutanix_default_virtual_switch) }}"
-#       vlan_id: "{{ outer_item.vlan_id }}"
+#         name: "{{ role_nutanix_pe_network_subnet_list_outer_item.virtual_switch | default(role_nutanix_pe_network_subnet_default_virtual_switch) }}"
+#       vlan_id: "{{ role_nutanix_pe_network_subnet_list_outer_item.vlan_id }}"
 #       cluster:
-#         name: "{{ cluster.name | default(nutanix_current_cluster_name) }}"
+#         name: "{{ cluster.name | default(role_nutanix_pe_network_subnet_cluster_name) }}"
 #   register: nutanix_subnet_update
 #   when:
-#     - nutanix_current_network_uuid != "None"
-#     - outer_item.state == "present"
-#     - not outer_item.net_address | ansible.utils.ipaddr
-#     - not outer_item.gateway | ansible.utils.ipaddr
+#     - role_nutanix_pe_network_subnet_list_item_network_uuid != "None"
+#     - role_nutanix_pe_network_subnet_list_outer_item.state == "present"
+#     - not role_nutanix_pe_network_subnet_list_outer_item.net_address | ansible.utils.ipaddr
+#     - not role_nutanix_pe_network_subnet_list_outer_item.gateway | ansible.utils.ipaddr
 #
-# - name: Update external subnet with AHV IPAM "{{ outer_item.name }}"
+# - name: Update external subnet with AHV IPAM "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
 #   ntnx_subnets:
-#     nutanix_host: "{{ nutanix_host }}"
-#     nutanix_username: "{{ nutanix_username }}"
-#     nutanix_password: "{{ nutanix_password }}"
-#     validate_certs: "{{ validate_certs }}"
+#     nutanix_host: "{{ role_nutanix_pe_network_subnet_host }}"
+#     nutanix_username: "{{ role_nutanix_pe_network_subnet_username }}"
+#     nutanix_password: "{{ role_nutanix_pe_network_subnet_password }}"
+#     validate_certs: "{{ role_nutanix_pe_network_subnet_validate_certs }}"
 #     state: present
 #     wait: True
-#     name: "{{ outer_item.name }}"
-#     subnet_uuid: "{{ nutanix_current_network_uuid }}"
+#     name: "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
+#     subnet_uuid: "{{ role_nutanix_pe_network_subnet_list_item_network_uuid }}"
 #     vlan_subnet: # "{{lookup('template','vlan_subnet.j2') | from_yaml | to_yaml}}"
 #       virtual_switch:
-#         name: "{{ outer_item.virtual_switch | default(nutanix_default_virtual_switch) }}"
-#       vlan_id: "{{ outer_item.vlan_id }}"
+#         name: "{{ role_nutanix_pe_network_subnet_list_outer_item.virtual_switch | default(role_nutanix_pe_network_subnet_default_virtual_switch) }}"
+#       vlan_id: "{{ role_nutanix_pe_network_subnet_list_outer_item.vlan_id }}"
 #       cluster:
-#         name: "{{ cluster.name | default(nutanix_current_cluster_name) }}"
+#         name: "{{ cluster.name | default(role_nutanix_pe_network_subnet_cluster_name) }}"
 #       ipam:
-#         network_ip: "{{ outer_item.net_address | ansible.utils.ipaddr('network') }}"
-#         network_prefix: "{{ outer_item.net_address | ansible.utils.ipaddr('prefix') }}"
-#         gateway_ip: "{{ outer_item.gateway }}"
-#         ip_pools: "{{ outer_item.pools | default([]) }}"
+#         network_ip: "{{ role_nutanix_pe_network_subnet_list_outer_item.net_address | ansible.utils.ipaddr('network') }}"
+#         network_prefix: "{{ role_nutanix_pe_network_subnet_list_outer_item.net_address | ansible.utils.ipaddr('prefix') }}"
+#         gateway_ip: "{{ role_nutanix_pe_network_subnet_list_outer_item.gateway }}"
+#         ip_pools: "{{ role_nutanix_pe_network_subnet_list_outer_item.pools | default([]) }}"
 #         dhcp:
 #           dns_servers: "{{ cluster.dns | default([]) }}"
 #           domain_name: "{{ cluster.domain | default('') }}"
 #           domain_search: "{{ cluster.domain_search | default('') }}"
 #   register: nutanix_subnet_update
 #   when:
-#     - nutanix_current_network_uuid != "None"
-#     - outer_item.state == "present"
-#     - outer_item.net_address | ansible.utils.ipaddr
-#     - outer_item.gateway | ansible.utils.ipaddr
+#     - role_nutanix_pe_network_subnet_list_item_network_uuid != "None"
+#     - role_nutanix_pe_network_subnet_list_outer_item.state == "present"
+#     - role_nutanix_pe_network_subnet_list_outer_item.net_address | ansible.utils.ipaddr
+#     - role_nutanix_pe_network_subnet_list_outer_item.gateway | ansible.utils.ipaddr
 
-- name: Delete external subnet "{{ outer_item.name }}"
+- name: Delete external subnet "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
   nutanix.ncp.ntnx_subnets:
-    nutanix_host: "{{ nutanix_host }}"
-    nutanix_username: "{{ nutanix_username }}"
-    nutanix_password: "{{ nutanix_password }}"
-    validate_certs: "{{ validate_certs }}"
+    nutanix_host: "{{ role_nutanix_pe_network_subnet_host }}"
+    nutanix_username: "{{ role_nutanix_pe_network_subnet_username }}"
+    nutanix_password: "{{ role_nutanix_pe_network_subnet_password }}"
+    validate_certs: "{{ role_nutanix_pe_network_subnet_validate_certs }}"
     state: absent
     wait: true
-    name: "{{ outer_item.name }}"
-    subnet_uuid: "{{ nutanix_current_network_uuid }}"
-  register: nutanix_subnet_delete
+    name: "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
+    subnet_uuid: "{{ role_nutanix_pe_network_subnet_list_item_network_uuid }}"
+  register: role_nutanix_pe_network_subnet_delete_task
   when:
-    - nutanix_current_network_uuid != "None"
-    - outer_item.state == "absent"
+    - role_nutanix_pe_network_subnet_list_item_network_uuid != "None"
+    - role_nutanix_pe_network_subnet_list_outer_item.state == "absent"
 
-- name: Debug nutanix_subnet_delete
+- name: Debug role_nutanix_pe_network_subnet_delete_task
   ansible.builtin.debug:
-    var: nutanix_subnet_delete
-  when: nutanix_debug
+    var: role_nutanix_pe_network_subnet_delete_task
+  when: role_nutanix_pe_network_subnet_debug
