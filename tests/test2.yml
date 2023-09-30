@@ -6,9 +6,9 @@
   module_defaults:
     group/nutanix.ncp.ntnx:
       role_nutanix_pe_network_subnet_host: 10.42.18.37
-      role_nutanix_pe_network_subnet_username: admin
-      role_nutanix_pe_network_subnet_password: nx2Tech869!
-      role_nutanix_pe_network_subnet_validate_certs: false
+      role_nutanix_pe_network_subnet_host_username: admin
+      role_nutanix_pe_network_subnet_host_password: nx2Tech869!
+      role_nutanix_pe_network_subnet_host_validate_certs: false
   tasks:
     - name: Setting Variables
       set_fact:

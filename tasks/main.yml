@@ -4,10 +4,10 @@
     name: grdavies.role_nutanix_prism_api
   vars:
     role_nutanix_prism_api_host: "{{ role_nutanix_pe_network_subnet_host }}"
-    role_nutanix_prism_api_username: "{{ role_nutanix_pe_network_subnet_username }}"
-    role_nutanix_prism_api_password: "{{ role_nutanix_pe_network_subnet_password }}"
-    role_nutanix_prism_api_port: "{{ role_nutanix_pe_network_subnet_port | default(omit) }}"
-    role_nutanix_prism_api_validate_certs: "{{ role_nutanix_pe_network_subnet_validate_certs | default(omit) }}"
+    role_nutanix_prism_api_host_username: "{{ role_nutanix_pe_network_subnet_host_username }}"
+    role_nutanix_prism_api_host_password: "{{ role_nutanix_pe_network_subnet_host_password }}"
+    role_nutanix_prism_api_host_port: "{{ role_nutanix_pe_network_subnet_host_port | default(omit) }}"
+    role_nutanix_prism_api_host_validate_certs: "{{ role_nutanix_pe_network_subnet_host_validate_certs | default(omit) }}"
     role_nutanix_prism_api_debug: "{{ role_nutanix_pe_network_subnet_debug | default(omit) }}"
 
 - name: Get PE cluster name
@@ -18,9 +18,9 @@
 - name: Gather cluster subnets
   nutanix.ncp.ntnx_subnets_info:
     nutanix_host: "{{ role_nutanix_pe_network_subnet_host }}"
-    nutanix_username: "{{ role_nutanix_pe_network_subnet_username }}"
-    nutanix_password: "{{ role_nutanix_pe_network_subnet_password }}"
-    validate_certs: "{{ role_nutanix_pe_network_subnet_validate_certs }}"
+    nutanix_username: "{{ role_nutanix_pe_network_subnet_host_username }}"
+    nutanix_password: "{{ role_nutanix_pe_network_subnet_host_password }}"
+    validate_certs: "{{ role_nutanix_pe_network_subnet_host_validate_certs }}"
   register: role_nutanix_pe_network_subnet_list_current
 
 - name: Inputs for external subnets task

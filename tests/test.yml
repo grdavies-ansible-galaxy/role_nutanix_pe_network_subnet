@@ -6,8 +6,8 @@
     - role: ../..
   vars:
     role_nutanix_pe_network_subnet_host: 10.38.67.37
-    role_nutanix_pe_network_subnet_username: admin
-    role_nutanix_pe_network_subnet_password: nx2Tech454!
+    role_nutanix_pe_network_subnet_host_username: admin
+    role_nutanix_pe_network_subnet_host_password: nx2Tech454!
     role_nutanix_pe_network_subnet_list:
       - name: Primary
         state: present

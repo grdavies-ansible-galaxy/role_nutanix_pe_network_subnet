@@ -32,9 +32,9 @@
 - name: Create external subnet without AHV IPAM "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
   nutanix.ncp.ntnx_subnets:
     nutanix_host: "{{ role_nutanix_pe_network_subnet_host }}"
-    nutanix_username: "{{ role_nutanix_pe_network_subnet_username }}"
-    nutanix_password: "{{ role_nutanix_pe_network_subnet_password }}"
-    validate_certs: "{{ role_nutanix_pe_network_subnet_validate_certs }}"
+    nutanix_username: "{{ role_nutanix_pe_network_subnet_host_username }}"
+    nutanix_password: "{{ role_nutanix_pe_network_subnet_host_password }}"
+    validate_certs: "{{ role_nutanix_pe_network_subnet_host_validate_certs }}"
     state: present
     wait: true
     name: "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
@@ -54,9 +54,9 @@
 - name: Create external subnet with AHV IPAM "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
   nutanix.ncp.ntnx_subnets:
     nutanix_host: "{{ role_nutanix_pe_network_subnet_host }}"
-    nutanix_username: "{{ role_nutanix_pe_network_subnet_username }}"
-    nutanix_password: "{{ role_nutanix_pe_network_subnet_password }}"
-    validate_certs: "{{ role_nutanix_pe_network_subnet_validate_certs }}"
+    nutanix_username: "{{ role_nutanix_pe_network_subnet_host_username }}"
+    nutanix_password: "{{ role_nutanix_pe_network_subnet_host_password }}"
+    validate_certs: "{{ role_nutanix_pe_network_subnet_host_validate_certs }}"
     state: present
     wait: true
     name: "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
@@ -90,9 +90,9 @@
 # - name: Update external subnet without AHV IPAM "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
 #   ntnx_subnets:
 #     nutanix_host: "{{ role_nutanix_pe_network_subnet_host }}"
-#     nutanix_username: "{{ role_nutanix_pe_network_subnet_username }}"
-#     nutanix_password: "{{ role_nutanix_pe_network_subnet_password }}"
-#     validate_certs: "{{ role_nutanix_pe_network_subnet_validate_certs }}"
+#     nutanix_username: "{{ role_nutanix_pe_network_subnet_host_username }}"
+#     nutanix_password: "{{ role_nutanix_pe_network_subnet_host_password }}"
+#     validate_certs: "{{ role_nutanix_pe_network_subnet_host_validate_certs }}"
 #     state: present
 #     wait: True
 #     name: "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
@@ -113,9 +113,9 @@
 # - name: Update external subnet with AHV IPAM "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
 #   ntnx_subnets:
 #     nutanix_host: "{{ role_nutanix_pe_network_subnet_host }}"
-#     nutanix_username: "{{ role_nutanix_pe_network_subnet_username }}"
-#     nutanix_password: "{{ role_nutanix_pe_network_subnet_password }}"
-#     validate_certs: "{{ role_nutanix_pe_network_subnet_validate_certs }}"
+#     nutanix_username: "{{ role_nutanix_pe_network_subnet_host_username }}"
+#     nutanix_password: "{{ role_nutanix_pe_network_subnet_host_password }}"
+#     validate_certs: "{{ role_nutanix_pe_network_subnet_host_validate_certs }}"
 #     state: present
 #     wait: True
 #     name: "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
@@ -145,9 +145,9 @@
 - name: Delete external subnet "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
   nutanix.ncp.ntnx_subnets:
     nutanix_host: "{{ role_nutanix_pe_network_subnet_host }}"
-    nutanix_username: "{{ role_nutanix_pe_network_subnet_username }}"
-    nutanix_password: "{{ role_nutanix_pe_network_subnet_password }}"
-    validate_certs: "{{ role_nutanix_pe_network_subnet_validate_certs }}"
+    nutanix_username: "{{ role_nutanix_pe_network_subnet_host_username }}"
+    nutanix_password: "{{ role_nutanix_pe_network_subnet_host_password }}"
+    validate_certs: "{{ role_nutanix_pe_network_subnet_host_validate_certs }}"
     state: absent
     wait: true
     name: "{{ role_nutanix_pe_network_subnet_list_outer_item.name }}"
