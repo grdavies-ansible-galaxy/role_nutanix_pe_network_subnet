@@ -1,5 +1,5 @@
 galaxy_info:
-  role_name: role_nutanix_pe_network_subnet_host
+  role_name: role_nutanix_prism_network_subnet
   namespace: grdavies
   author: Ross Davies
   description: Role to configure network subnets configured on Nutanix cluster running the AHV hypervisor
