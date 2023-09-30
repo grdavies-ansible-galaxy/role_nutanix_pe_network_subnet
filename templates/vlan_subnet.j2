@@ -1,19 +1,19 @@
 ---
   virtual_switch:
-    name: "{{ role_nutanix_pe_network_subnet_list_outer_item.virtual_switch | default(role_nutanix_pe_network_subnet_default_virtual_switch) }}"
-  vlan_id: {{ role_nutanix_pe_network_subnet_list_outer_item.vlan_id }}
+    name: "{{ role_nutanix_prism_network_subnet_list_outer_item.virtual_switch | default(role_nutanix_prism_network_subnet_default_virtual_switch) }}"
+  vlan_id: {{ role_nutanix_prism_network_subnet_list_outer_item.vlan_id }}
   cluster:
-    name: "{{ cluster_name | default(role_nutanix_pe_network_subnet_cluster_name) }}"
-{% if role_nutanix_pe_network_subnet_list_outer_item.net_address | default('') != "" and role_nutanix_pe_network_subnet_list_outer_item.gateway | default('') != "" %}
+    name: "{{ cluster_name | default(role_nutanix_prism_network_subnet_cluster_name) }}"
+{% if role_nutanix_prism_network_subnet_list_outer_item.net_address | default('') != "" and role_nutanix_prism_network_subnet_list_outer_item.gateway | default('') != "" %}
   ipam:
-    network_ip: "{{ role_nutanix_pe_network_subnet_list_outer_item.net_address | ansible.utils.ipaddr('network') }}"
-    network_prefix: "{{ role_nutanix_pe_network_subnet_list_outer_item.net_address | ansible.utils.ipaddr('prefix') }}"
-    gateway_ip: "{{ role_nutanix_pe_network_subnet_list_outer_item.gateway }}"
-    ip_pools: {{ role_nutanix_pe_network_subnet_list_outer_item.ipam | default([]) }}
-{% if role_nutanix_pe_network_subnet_list_outer_item.dns_server_list | length > 0 or role_nutanix_pe_network_subnet_list_outer_item.domain_name | default('') != ""  or role_nutanix_pe_network_subnet_list_outer_item.domain_search | default('') != "" %}
+    network_ip: "{{ role_nutanix_prism_network_subnet_list_outer_item.net_address | ansible.utils.ipaddr('network') }}"
+    network_prefix: "{{ role_nutanix_prism_network_subnet_list_outer_item.net_address | ansible.utils.ipaddr('prefix') }}"
+    gateway_ip: "{{ role_nutanix_prism_network_subnet_list_outer_item.gateway }}"
+    ip_pools: {{ role_nutanix_prism_network_subnet_list_outer_item.ipam | default([]) }}
+{% if role_nutanix_prism_network_subnet_list_outer_item.dns_server_list | length > 0 or role_nutanix_prism_network_subnet_list_outer_item.domain_name | default('') != ""  or role_nutanix_prism_network_subnet_list_outer_item.domain_search | default('') != "" %}
     dhcp:
-      dns_servers: "{{ role_nutanix_pe_network_subnet_list_outer_item.dns_server_list | default([]) }}"
-      domain_name: "{{ role_nutanix_pe_network_subnet_list_outer_item.domain_name | default('') }}"
-      domain_search: "{{ role_nutanix_pe_network_subnet_list_outer_item.domain_search | default('') }}"
+      dns_servers: "{{ role_nutanix_prism_network_subnet_list_outer_item.dns_server_list | default([]) }}"
+      domain_name: "{{ role_nutanix_prism_network_subnet_list_outer_item.domain_name | default('') }}"
+      domain_search: "{{ role_nutanix_prism_network_subnet_list_outer_item.domain_search | default('') }}"
 {% endif %}
 {% endif %}

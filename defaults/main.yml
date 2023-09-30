@@ -1,10 +1,10 @@
 ---
 # defaults file for nutanix_role_prism_network_subnet
-role_nutanix_pe_network_subnet_host: ""
-role_nutanix_pe_network_subnet_host_username: ""
-role_nutanix_pe_network_subnet_host_password: ""
-role_nutanix_pe_network_subnet_host_port: 9440
-role_nutanix_pe_network_subnet_host_validate_certs: false
-role_nutanix_pe_network_subnet_debug: false
-role_nutanix_pe_network_subnet_default_virtual_switch: vs0
+role_nutanix_prism_network_subnet_host: ""
+role_nutanix_prism_network_subnet_host_username: ""
+role_nutanix_prism_network_subnet_host_password: ""
+role_nutanix_prism_network_subnet_host_port: 9440
+role_nutanix_prism_network_subnet_host_validate_certs: false
+role_nutanix_prism_network_subnet_debug: false
+role_nutanix_prism_network_subnet_default_virtual_switch: vs0
 empty_list: []

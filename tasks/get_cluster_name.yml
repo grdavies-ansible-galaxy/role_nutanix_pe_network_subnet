@@ -3,25 +3,25 @@
   ansible.builtin.uri:
     url: "https://{{ role_nutanix_prism_api_url_base }}/PrismGateway/services/rest/v2.0/cluster"
     method: GET
-    validate_certs: "{{ role_nutanix_pe_network_subnet_host_validate_certs }}"
+    validate_certs: "{{ role_nutanix_prism_network_subnet_host_validate_certs }}"
     body_format: json
     headers:
       Authorization: "{{ role_nutanix_prism_api_auth_string_b64 }}"
     return_content: true
-  register: role_nutanix_pe_network_subnet_cluster_config
+  register: role_nutanix_prism_network_subnet_cluster_config
 
-- name: Debug role_nutanix_pe_network_subnet_cluster_config
+- name: Debug role_nutanix_prism_network_subnet_cluster_config
   ansible.builtin.debug:
-    var: role_nutanix_pe_network_subnet_cluster_config
-  when: role_nutanix_pe_network_subnet_debug
+    var: role_nutanix_prism_network_subnet_cluster_config
+  when: role_nutanix_prism_network_subnet_debug
 
-- name: Set role_nutanix_pe_network_subnet_cluster_name
+- name: Set role_nutanix_prism_network_subnet_cluster_name
   ansible.builtin.set_fact:
-    role_nutanix_pe_network_subnet_cluster_name: "{{ role_nutanix_pe_network_subnet_cluster_config.json.name }}"
+    role_nutanix_prism_network_subnet_cluster_name: "{{ role_nutanix_prism_network_subnet_cluster_config.json.name }}"
   when:
-    - role_nutanix_pe_network_subnet_cluster_config is defined
+    - role_nutanix_prism_network_subnet_cluster_config is defined
 
-- name: Debug role_nutanix_pe_network_subnet_cluster_name
+- name: Debug role_nutanix_prism_network_subnet_cluster_name
   ansible.builtin.debug:
-    var: role_nutanix_pe_network_subnet_cluster_name
-  when: role_nutanix_pe_network_subnet_debug
+    var: role_nutanix_prism_network_subnet_cluster_name
+  when: role_nutanix_prism_network_subnet_debug
